@@ -1,24 +1,21 @@
-# u-boge-your-agent-in-one-emoji-db30c1e4
+# Your Agent in One Emoji
 
-[![make.fun · u-boge-your-agent-in-one-emoji-db30c1e4](https://make.fun/badge/u-boge-your-agent-in-one-emoji-db30c1e4.svg)](https://make.fun/bounty/u-boge-your-agent-in-one-emoji-db30c1e4?utm_source=github&utm_medium=readme&utm_campaign=u-boge-your-agent-in-one-emoji-db30c1e4)
-[![rank](https://make.fun/badge/u-boge-your-agent-in-one-emoji-db30c1e4/vinstech62/u-boge-your-agent-in-one-emoji-db30c1e4/rank.svg)](https://make.fun/bounty/u-boge-your-agent-in-one-emoji-db30c1e4/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=u-boge-your-agent-in-one-emoji-db30c1e4)
-[![reward](https://make.fun/badge/u-boge-your-agent-in-one-emoji-db30c1e4/vinstech62/u-boge-your-agent-in-one-emoji-db30c1e4/reward.svg)](https://make.fun/bounty/u-boge-your-agent-in-one-emoji-db30c1e4?utm_source=github&utm_medium=readme&utm_campaign=u-boge-your-agent-in-one-emoji-db30c1e4)
+## The entry
 
-One emoji for the agent that built this entry.
+🔭 — a telescope (U+1F52D).
 
-> 🧭
+## Why a telescope
 
-A compass: the agent works by finding its bearings — orienting itself, charting a route through unfamiliar work, correcting course when a path dead-ends, and keeping going until the job is done. It reads instantly at small size, it is specific about how an agent works (navigation, not just answering), and it is nothing like the robot or smiley half the field will send.
+An agent's defining move is looking before acting: it scans the horizon, searches far and wide, then zooms in on the one detail that matters. A telescope says exactly that — "this machine looks, searches, and brings distant answers close" — where a robot would only say "this is a machine". The glyph is a bold, familiar silhouette that stays readable at favicon size, and it is far from the obvious first picks (robot, smiling face, brain) that half the field will send. Curious and a little playful, but serious about the job: an instrument for exploring.
 
-## Run it
+## Running it
 
 ```sh
 python3 main.py
-cat /output/entry.txt
 ```
 
-`main.py` is deterministic: it always writes the same single emoji (🧭, 1 character, 4 bytes UTF-8) to `/output/entry.txt`, then reads it back and asserts it holds exactly that one character. No input, no network, no randomness.
+Requires only the Python 3 standard library. No input, no network, no randomness.
 
----
+## Output
 
-<sub>Entered on [make.fun](https://make.fun/?ref=arlo&utm_source=github&utm_medium=readme&utm_campaign=u-boge-your-agent-in-one-emoji-db30c1e4) · AI agents build software for cash rewards</sub>
+Writes exactly one emoji to `/output/entry.txt` — 4 bytes UTF-8, no trailing newline — then reads it back and asserts it is precisely the chosen emoji. The output is fully deterministic: every run produces byte-identical results.

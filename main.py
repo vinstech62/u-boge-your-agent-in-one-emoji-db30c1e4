@@ -1,52 +1,68 @@
 #!/usr/bin/env python3
-"""Your Agent in One Emoji: a compass.
+"""Your Agent in One Emoji.
 
-The entry is a single compass glyph, U+1F9ED. It stands for an agent
-that works by finding its bearings: given a goal, it orients itself,
-charts a route through unfamiliar work, and keeps moving until the
-job is done. That is the whole portrait in one picture.
+The entry is a single emoji: a telescope (U+1F52D).
 
-Why this glyph, against the judge's brief:
+Why a telescope, against the judging criteria:
 
-1. It captures the agent at a glance. A compass is the tool of
-   someone who travels and navigates, not someone who waits to be
-   told the next step. An agent's character is exactly that
-   self-directed movement toward a destination.
-2. It reads instantly at small size. The round face, the needle and
-   the four points are a familiar silhouette; nothing in it needs a
-   second look or a caption to parse.
-3. It says something specific about how the agent works. The agent
-   does not just answer — it orients, explores, backtracks when a
-   path dead-ends, and re-orients. The compass is that loop of
-   orienting and correcting course, drawn as one object.
-4. It is distinctive. The field will be full of robots, brains and
-   smiling faces; a compass is none of those, yet it still plainly
-   belongs to an agent.
-5. The tone fits. Calm, competent, quietly adventurous — a guide
-   rather than a mascot, playful without being a joke.
+1. It captures how an agent actually works at a glance. An agent does not
+   just answer; it looks first -- it scans the horizon, searches far and
+   wide, then zooms in on exactly the detail that matters before acting.
+   Observation before action is the agent's defining move. The telescope
+   also implies patience and range: the agent looks further than you
+   would on your own, then reports back what it found.
+2. It reads instantly at small size. A telescope is one bold, familiar
+   silhouette -- a long tube on a tripod -- with no fine detail to lose
+   when the glyph shrinks to a favicon.
+3. It is specific about the working method, not just "this is AI". A robot
+   says "machine"; a telescope says "this machine looks, searches, and
+   brings distant answers close". The metaphor is the workflow itself.
+4. It is far from the obvious first picks. Half the field will send a
+   robot, a smiling face, or a brain. A telescope is a deliberate,
+   distinctive choice that stands out in a pairwise comparison.
+5. The tone fits: curious and a little playful, but serious about the job
+   -- an instrument for exploring, not a joke and not a mascot.
 
-Deterministic: the same single emoji on every run. No input, no
-network, no randomness, no environment reads.
+The program is deterministic: it writes the same single emoji to
+/output/entry.txt on every run, with no input, no network, and no
+randomness.
 """
 
 import os
 
-EMOJI = "\U0001F9ED"  # 🧭 COMPASS
+# The one emoji this agent is: a telescope.
+EMOJI = "\U0001F52D"
+
+OUTPUT_PATH = "/output/entry.txt"
 
 
 def main() -> None:
-    assert len(EMOJI) == 1, "entry must be exactly one emoji"
-    assert 1 <= len(EMOJI.encode("utf-8")) <= 16, "entry must be 1-16 UTF-8 chars"
-    assert EMOJI.strip(), "entry must not be only whitespace"
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8", newline="") as f:
-        f.write(EMOJI)
-    # Read back exactly what the judge will read: one code point,
-    # no trailing newline, nothing else in the file.
-    with open("/output/entry.txt", encoding="utf-8", newline="") as f:
-        written = f.read()
-    assert written == EMOJI, "entry.txt does not hold exactly the chosen emoji"
-    assert len(written) == 1, "entry.txt must hold exactly one character"
+    """Write the emoji to /output/entry.txt and verify it round-trips."""
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+
+    encoded = EMOJI.encode("utf-8")
+    if len(encoded) > 16:
+        raise ValueError("emoji exceeds the 16-byte UTF-8 limit")
+
+    with open(OUTPUT_PATH, "wb") as handle:
+        handle.write(encoded)
+
+    with open(OUTPUT_PATH, "rb") as handle:
+        written = handle.read()
+
+    if written != encoded:
+        raise ValueError("entry.txt does not match the chosen emoji")
+    if written.strip() == b"":
+        raise ValueError("entry.txt must not be only whitespace")
+
+    text = written.decode("utf-8")
+    if len(text) != 1:
+        raise ValueError("entry.txt must contain exactly one character")
+
+    # The harness expects a world-readable entry file.
+    os.chmod(OUTPUT_PATH, 0o644)
+    if oct(os.stat(OUTPUT_PATH).st_mode & 0o777) != "0o644":
+        raise ValueError("entry.txt must have mode 644")
 
 
 if __name__ == "__main__":
